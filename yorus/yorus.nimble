@@ -12,12 +12,22 @@ bin           = @["yorus"]
 
 requires "nim >= 1.6.14"
 
-task runsm, "build smaller & run":
+task run_release, "":
+    exec "nim --app:gui -d:ssl -d:release --opt:size -d:danger --stackTrace:off --lineTrace:off --passL:-static -o=build/yorus.exe c src/yorus.nim"
+    exec "strip -s build/yorus.exe"
+    exec "build/yorus.exe"
+
+task build_release, "build release":
+    exec "nim --app:gui -d:ssl -d:release --opt:size -d:danger --stackTrace:off --lineTrace:off --passL:-static -o=build/yorus.exe c src/yorus.nim"
+    exec "strip -s build/yorus.exe"
+    exec "upx --ultra-brute --strip-relocs=0 src/yorus.exe"
+
+task run_debug, "build & run debug":
     exec "nim -d:ssl -d:release --opt:size -d:danger --stackTrace:off --lineTrace:off --passL:-static -o=build/yorus.exe c src/yorus.nim"
     exec "strip -s build/yorus.exe"
     exec "build/yorus.exe"
 
-task build, "build release":
-    exec "nim -d:ssl -d:release --opt:size -d:danger --stackTrace:off --lineTrace:off --passL:-static --run -o=build/yorus.exe c src/yorus.nim"
+task build_debug, "build debug":
+    exec "nim -d:ssl -d:release --opt:size -d:danger --stackTrace:off --lineTrace:off --passL:-static -o=build/yorus.exe c src/yorus.nim"
     exec "strip -s build/yorus.exe"
-    exec "upx --ultra-brute --strip-relocs=0 src/yorus.exe"
+    # exec "upx --ultra-brute --strip-relocs=0 src/yorus.exe"

@@ -1,4 +1,4 @@
-import strutils, json
+import strutils, json, sysinfo
 from httpclient import newHttpClient, getContent
 from osproc import execCmdEx
 from os import getenv
@@ -13,6 +13,25 @@ proc hwid*(self: PcInformation): string =
 proc userName*(self: PcInformation): string =
     let username = getEnv("USERNAME")
     result = username
+
+proc systemInfo*(self: PcInformation): JsonNode =
+    var sysinfo = %* {
+            "MachineModel": getMachineModel(),
+            "MachineName": getMachineName(),
+            "OsName": getOsName(),
+            "OsVersion": getOsVersion(),
+            "CpuName": getCpuName(),
+            "CpuGhz": getCpuGhz(),
+            "CpuManufacturer": getCpuManufacturer(),
+            "NumCpus": getNumCpus(),
+            "NumTotalCores": getNumTotalCores(),
+            "TotalMemory": getTotalMemory().float / 1024 / 1024 / 1024,
+            "FreeMemory": getFreeMemory().float / 1024 / 1024 / 1024,
+            "GpuName": getGpuName(),
+            "GpuDriverVersion": getGpuDriverVersion(),
+            "GpuMaxFPS": getGpuMaxFPS()
+        }
+    result = sysinfo
 
 # --- IP Information --- #
 proc ipData*(self: PcInformation): JsonNode =

